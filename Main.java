@@ -45,7 +45,7 @@ class Main {
           for (int y = 0; y < tailleY; y++) {
             int nbrAleatoire = Outils.entierAleatoire(0,100);
             if (nbrAleatoire <= tauxDeRemplissage) {
-              grille[x][y] = Statut.Vivante;
+              //grille[x][y] = Statut.Vivante;
 
               int choixDePop = Outils.entierAleatoire(0,2);
               if (choixDePop < 1) {
@@ -110,9 +110,11 @@ class Main {
               grilleTemp[x][y] = Statut.Mourrante1;
               continue;
             }
+            grilleTemp[x][y] = Statut.Morte;
+            taillePop1 -= 1;
+          } else {
+            grilleTemp[x][y] = Statut.Vivante1;
           }
-          grilleTemp[x][y] = Statut.Morte;
-          taillePop1 -= 1;
         } else if (statutPrecedent == Statut.Vivante2) {
           int nombreDeVoisins = evaluerNombreDeCellules(x, y, 1, Statut.Vivante2);
           if ((nombreDeVoisins < 2) || (nombreDeVoisins > 3)) {
@@ -120,9 +122,11 @@ class Main {
               grilleTemp[x][y] = Statut.Mourrante2;
               continue;
             }
+            grilleTemp[x][y] = Statut.Morte;
+            taillePop2 -= 1;
+          } else {
+            grilleTemp[x][y] = Statut.Vivante2;
           }
-          grilleTemp[x][y] = Statut.Morte;
-          taillePop2 -= 1;
         }
 
         if (statutPrecedent == Statut.Morte) {
@@ -157,6 +161,8 @@ class Main {
               continue;
             }
             grilleTemp[x][y] = Statut.Vivante2;
+          } else {
+            grilleTemp[x][y] = Statut.Morte;
           }
         }
       }
@@ -196,8 +202,12 @@ class Main {
         Ecran.changerCouleurFond(Ecran.Couleur.BLANC);
         System.out.print("  ");
 				break;
-			case Vivante:
+			case Vivante1:
         Ecran.changerCouleurFond(Ecran.Couleur.NOIR);    
+        System.out.print("  ");
+		    break;
+      case Vivante2:
+        Ecran.changerCouleurFond(Ecran.Couleur.BLEU);    
         System.out.print("  ");
 		    break;
       case Naissante1:
@@ -216,8 +226,11 @@ class Main {
 			case Morte:
         System.out.print(".");
 				break;
-			case Vivante:
+			case Vivante1:
         System.out.print("#");
+				break;
+      case Vivante2:
+        System.out.print("@");
 				break;
       case Naissante1:
       case Naissante2:
